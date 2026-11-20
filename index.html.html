@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10 Year Anniversary 💖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      color: #ffe4ec;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      overflow: hidden;
+      transition: background 0.8s ease;
+      background: radial-gradient(circle at top, #3b0a1e, #12020a);
+    }
+
+    /* ---------- Countdown ---------- */
+    #countdown {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    #countNum {
+      font-size: 14rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 40px rgba(255, 255, 255, 0.6);
+      animation: pop 1s ease;
+    }
+    @keyframes pop {
+      0%   { transform: scale(0.3); opacity: 0; }
+      40%  { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+
+    /* ---------- Pages ---------- */
+    .page {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .page.active { display: flex; animation: fadeIn 1s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ---------- 3D Heart Ring ---------- */
+    .scene {
+      width: 200px;
+      height: 200px;
+      perspective: 700px;
+      margin-bottom: 30px;
+    }
+    .ring {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spin 12s linear infinite;
+    }
+    .heart {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      font-size: 2.2rem;
+      color: #ff4d7d;
+      text-shadow: 0 0 12px #ff4d7d;
+      transform:
+        translate(-50%, -50%)
+        rotateY(calc(var(--i) * 45deg))
+        translateZ(140px);
+    }
+    @keyframes spin {
+      from { transform: rotateX(-12deg) rotateY(0deg); }
+      to   { transform: rotateX(-12deg) rotateY(360deg); }
+    }
+
+    /* ---------- Side slide text ---------- */
+    .title {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      opacity: 0;
+    }
+    .name {
+      font-size: 1.8rem;
+      color: #ff7aa2;
+      margin-bottom: 40px;
+      opacity: 0;
+    }
+    .slide-left  { animation: slideLeft 1.2s ease forwards; }
+    .slide-right { animation: slideRight 1.2s ease 0.6s forwards; }
+    @keyframes slideLeft {
+      from { transform: translateX(-120vw); opacity: 0; }
+      to   { transform: translateX(0);      opacity: 1; }
+    }
+    @keyframes slideRight {
+      from { transform: translateX(120vw); opacity: 0; }
+      to   { transform: translateX(0);     opacity: 1; }
+    }
+
+    /* ---------- Buttons ---------- */
+    button {
+      padding: 14px 32px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #ff4d7d, #ff7aa2);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(255, 77, 125, 0.4);
+      transition: transform 0.2s;
+    }
+    button:hover { transform: scale(1.08); }
+
+    /* ---------- Page 2 ---------- */
+    .message-card {
+      max-width: 520px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 122, 162, 0.4);
+      border-radius: 20px;
+      padding: 32px;
+      line-height: 1.8;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      animation: fadeIn 1.5s ease;
+    }
+    .message-card h2 { color: #ff7aa2; margin-bottom: 16px; }
+
+    .page2-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    /* ---------- Page 3: Polaroid 3D Carousel ---------- */
+    #page3 {
+      background: radial-gradient(circle at 50% 30%, #4a1034, #0b0109);
+      overflow: hidden;
+    }
+    .memories-title {
+      font-family: "Dancing Script", cursive;
+      font-size: 3rem;
+      color: #ffb3c9;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(255, 122, 162, 0.6);
+      animation: fadeIn 1s ease;
+    }
+    .memories-sub {
+      opacity: 0.7;
+      margin-bottom: 30px;
+      font-size: 0.95rem;
+    }
+
+    .carousel-scene {
+      width: 320px;
+      height: 380px;
+      perspective: 1200px;
+      position: relative;
+    }
+    .carousel {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.4s cubic-bezier(.22,.61,.36,1);
+    }
+    .polaroid {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 180px;
+      padding: 10px 10px 36px;
+      background: #fff8fb;
+      border-radius: 6px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,122,162,0.3);
+      transform:
+        translate(-50%, -50%)
+        rotateY(calc(var(--i) * 30deg))
+        translateZ(330px);
+      transition: box-shadow 0.6s ease;
+    }
+    .polaroid img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 3px;
+      display: block;
+      background: linear-gradient(135deg, #ff4d7d, #ffb3c9);
+    }
+    .polaroid img.float {
+      animation: float 4s ease-in-out infinite;
+    }
+    .polaroid .fallback {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: linear-gradient(135deg, #ff4d7d, #ffb3c9);
+      border-radius: 3px;
+    }
+    .polaroid .caption {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: "Dancing Script", cursive;
+      color: #b0244f;
+      font-size: 1.2rem;
+    }
+    .polaroid.front-card {
+      box-shadow: 0 16px 50px rgba(255,77,125,0.55), 0 0 0 2px #ff7aa2;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-10px); }
+    }
+
+    .carousel-controls {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .dots {
+      margin-top: 18px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 320px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: transform 0.3s, background 0.3s;
+      cursor: pointer;
+    }
+    .dot.active { background: #ff7aa2; transform: scale(1.4); }
+  </style>
+</head>
+<body>
+
+  <!-- ===== AUDIO (song.mp3 -> new.img folder-la irukanum) ===== -->
+  <audio id="bgMusic" src="new.img/song.mp3" loop preload="auto"></audio>
+
+  <!-- ===== COUNTDOWN ===== -->
+  <div id="countdown">
+    <div id="countNum">3</div>
+  </div>
+
+  <!-- ===== PAGE 1 ===== -->
+  <section class="page" id="page1">
+    <div class="scene">
+      <div class="ring">
+        <span class="heart" style="--i:0">❤</span>
+        <span class="heart" style="--i:1">💖</span>
+        <span class="heart" style="--i:2">❤</span>
+        <span class="heart" style="--i:3">💕</span>
+        <span class="heart" style="--i:4">❤</span>
+        <span class="heart" style="--i:5">💗</span>
+        <span class="heart" style="--i:6">❤</span>
+        <span class="heart" style="--i:7">💞</span>
+      </div>
+    </div>
+<h1>21/11/2026</h1>
+    <h1 class="title slide-left">Happy 10 Year Love Anniversary</h1>
+    <h2 class="name slide-right">Thangoo Pulla 💖</h2>
+
+    <button id="nextBtn">Click here ➜</button>
+  </section>
+
+  <!-- ===== PAGE 2 ===== -->
+  <section class="page" id="page2">
+    <div class="message-card">
+      <h2>Thangoo Pulla 💖</h2>
+      <!-- MESSAGE: unga message-a inga maathikkalam -->
+      <p>
+       ~ En Ponnu -!! 🫶🏻
+
+
+Hi Thangoo pulla...🤗
+Unna evlo love panren nu vaarthai la solla mudiyadhu 😣💯. Nee en life la vandhadhukku apram dhaan santhosham na enna nu purinjadhu 🥺💗.
+
+Un sirippu, un care, un presence ellame enakku romba special 😭🫂. Enakku kashtama irundhalum, santhoshama irundhalum mudhala nyabagam varradhu nee dhaan ❤️.
+
+Un kooda pesura ovvoru nimishamum enakku precious 💕. Endha situation vandhalum unna vittu pogama, un kaiya pudichittu irukanum nu dhaan aasai 💗💋.
+
+Nee enakku oru lover mattum illa , en santhosham, en nimmadhi, en ulagame 🌍💕
+En pondatiiii En Ponnu En kolathe yellamey ne mattum dha Mh 🤌🏻🫵🏻💗
+
+
+Na romba Lucky person theriuma
+Ne yenaku kidachathu 🥹
+
+
+
+I Love you so much thangoo pulla ,  🌍🫂💋
+      </p>
+    </div>
+
+    <div class="page2-buttons">
+      <button id="viewBtn">View 📸</button>
+      <button id="backBtn">⬅ Back</button>
+    </div>
+  </section>
+
+  <!-- ===== PAGE 3 ===== -->
+  <section class="page" id="page3">
+    <h1 class="memories-title">Our Memories 💕</h1>
+    <p class="memories-sub"></p>
+
+    <div class="carousel-scene">
+      <div class="carousel" id="carousel"></div>
+    </div>
+
+    <div class="carousel-controls">
+      <button id="prevPhoto">⬅</button>
+      <button id="nextPhoto">➜</button>
+    </div>
+    <div class="dots" id="dots"></div>
+
+    <div style="margin-top:20px;">
+      <button id="backFromMemories">⬅ Back to message</button>
+    </div>
+  </section>
+
+  <script>
+    /* ===== PHOTO LIST: unga photo file names inga maathunga (18 photo varaikum add pannalam) ===== */
+    const photos = [
+      { src: "new.img/1img.jpeg",    caption: "thangoo pulla💕" },
+      { src: "new.img/hiimg.jpeg",   caption: "chloo" },
+      { src: "new.img/schlo.jpeg",   caption: "pattu kuchuu 😊" },
+      { src: "new.img/pk.jpeg",      caption: "boo boo🌸" },
+      { src: "new.img/saii.jpeg",    caption: "Together ❤️" },
+      { src: "new.img/hand.jpeg",    caption: "bby" },
+      { src: "new.img/css.jpeg",     caption: "ammu 🎉" },
+      { src: "new.img/hug.jpeg",     caption: "Forever 💖" },
+      { src: "new.img/homee.jpeg",   caption: "kuttachii" },
+      { src: "new.img/mir.jpeg",     caption: "en alagu pulla 🥰" },
+      { src: "new.img/face.jpeg",    caption: "kunjuuu 🐥" },
+      { src: "new.img/bike.jpeg",    caption: "ponnu 💞" },
+      { src: "new.img/avinasi.jpeg", caption: "my princess" },
+      { src: "new.img/food.jpeg",    caption: "love di pondatii 💞" }
+    ];
+
+    /* ===== Music ===== */
+    const bgMusic = document.getElementById('bgMusic');
+    bgMusic.volume = 0.6;
+
+    function playMusic() {
+      bgMusic.play().catch(err => console.log('Music error:', err.message));
+    }
+
+    function stopMusic() {
+      bgMusic.pause();
+      bgMusic.currentTime = 0; // next time first-la irundhu start aagum
+    }
+
+    /* ===== Countdown ===== */
+    const countNum = document.getElementById('countNum');
+    const countdown = document.getElementById('countdown');
+    const body = document.body;
+    const colors = {
+      3: 'radial-gradient(circle, #7c3aed, #1e1b4b)',
+      2: 'radial-gradient(circle, #e11d48, #4c0519)',
+      1: 'radial-gradient(circle, #059669, #022c22)'
+    };
+    const mainBg = 'radial-gradient(circle at top, #3b0a1e, #12020a)';
+
+    let count = 3;
+    body.style.background = colors[count];
+
+    const timer = setInterval(() => {
+      count--;
+      if (count > 0) {
+        countNum.textContent = count;
+        countNum.style.animation = 'none';
+        countNum.offsetHeight; // restart pop animation
+        countNum.style.animation = '';
+        body.style.background = colors[count];
+      } else {
+        clearInterval(timer);
+        countdown.style.display = 'none';
+        body.style.background = mainBg;
+        showPage('page1');
+      }
+    }, 1000);
+
+    /* ===== Page navigation ===== */
+    const pages = {
+      page1: document.getElementById('page1'),
+      page2: document.getElementById('page2'),
+      page3: document.getElementById('page3')
+    };
+
+    function showPage(id) {
+      Object.values(pages).forEach(p => p.classList.remove('active'));
+      pages[id].classList.add('active');
+
+      if (id === 'page3') {
+        playMusic();       // View click -> song play
+        startCarousel();
+      } else {
+        stopMusic();       // Back -> song off
+        stopCarousel();
+      }
+    }
+
+    document.getElementById('nextBtn').onclick = () => showPage('page2');          // Page 1 -> Page 2
+    document.getElementById('backBtn').onclick = () => showPage('page1');          // Page 2 -> Page 1
+    document.getElementById('viewBtn').onclick = () => showPage('page3');          // Page 2 -> Page 3
+    document.getElementById('backFromMemories').onclick = () => showPage('page2'); // Page 3 -> Page 2
+
+    /* ===== Build the 3D photo carousel ===== */
+    const carousel = document.getElementById('carousel');
+    const dotsBox = document.getElementById('dots');
+    const total = photos.length;
+    const anglePer = 360 / total;
+    let current = 0;
+    let autoTimer = null;
+
+    photos.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'polaroid';
+      card.style.setProperty('--i', i);
+
+      const img = document.createElement('img');
+      img.src = p.src;
+      img.alt = 'memory ' + (i + 1);
+      img.className = 'float';
+      img.style.animationDelay = (i * 0.2) + 's';
+      // If photo file is missing, show a heart placeholder instead
+      img.onerror = () => {
+        const fb = document.createElement('div');
+        fb.className = 'fallback';
+        fb.textContent = '💖';
+        img.replaceWith(fb);
+      };
+
+      const caption = document.createElement('div');
+      caption.className = 'caption';
+      caption.textContent = p.caption;
+
+      card.appendChild(img);
+      card.appendChild(caption);
+      carousel.appendChild(card);
+
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.onclick = () => { goTo(i); restartAuto(); };
+      dotsBox.appendChild(dot);
+    });
+
+    const cards = carousel.querySelectorAll('.polaroid');
+
+    function goTo(index) {
+      current = (index + total) % total;
+      // Rotate the whole ring so the chosen photo faces front
+      carousel.style.transform = `rotateY(${-current * anglePer}deg)`;
+      cards.forEach((c, i) => c.classList.toggle('front-card', i === current));
+      [...dotsBox.children].forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    /* Song length-ah total photos-ku split pannum.
+       Example: 13 sec song + 14 photos = ovvoru photo ~0.93 sec */
+    function getSlideMs() {
+      const songMs = (bgMusic.duration && isFinite(bgMusic.duration))
+        ? bgMusic.duration * 1000
+        : 13000; // metadata load aagala na default 13 sec
+      return songMs / total;
+    }
+
+    function startCarousel() {
+      current = 0;
+      goTo(current);
+      restartAuto();
+    }
+
+    function stopCarousel() {
+      clearInterval(autoTimer);
+    }
+
+    function restartAuto() {
+      stopCarousel();
+      autoTimer = setInterval(() => goTo(current + 1), getSlideMs());
+    }
+
+    document.getElementById('nextPhoto').onclick = () => { goTo(current + 1); restartAuto(); };
+    document.getElementById('prevPhoto').onclick = () => { goTo(current - 1); restartAuto(); };
+  </script>
+
+</body>
+</html>
